@@ -1,0 +1,26 @@
+{% extends "base.peb" %}
+{% block content %}
+    <div class="page-header">
+        <h1>Blog Archive</h1>
+    </div>
+
+<!--    <ul>-->
+    {% for post in published_posts %}
+        {% if last_month.length != 0 %}
+            {% if post.date|date("MMMM yyyy") != last_month %}
+                </ul>
+                <h4>{{post.date|date("MMMM yyyy")}}</h4>
+                <ul>
+            {% endif %}
+        {% else %}
+
+            <h4>{{post.date|date("MMMM yyyy")}}</h4>
+            <ul>
+
+        {% endif %}
+
+        <li>{{post.date|date("dd")}} - <a href="{{content.rootpath}}{{post.uri}}">{{post.title | raw}}</a></li>
+        {% set last_month = post.date|date("MMMM yyyy")%}
+    {% endfor %}
+    </ul>
+{% endblock %}
